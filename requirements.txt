@@ -1,3 +1,5 @@
 langchain-community
 qdrant-client
 sentence-transformers
+datasets
+pandas

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lawsetu-backend
+  labels:
+    app: lawsetu
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lawsetu
+  template:
+    metadata:
+      labels:
+        app: lawsetu
+    spec:
+      containers:
+      - name: lawsetu-backend
+        image: your-dockerhub-username/lawsetu-backend:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: QDRANT_URL
+          value: "http://qdrant:6333"
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: lawsetu-secrets
+              key: openai_api_key
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lawsetu-backend
+spec:
+  selector:
+    app: lawsetu
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: ClusterIP
