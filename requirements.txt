@@ -4,3 +4,5 @@ sentence-transformers
 datasets
 pandas
 pytest
+python-dotenv
+groq

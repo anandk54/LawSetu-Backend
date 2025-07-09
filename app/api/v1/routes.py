@@ -20,4 +20,4 @@ class DocumentRequest(BaseModel):
 @router.post("/embed")
 async def embed_document_route(request: DocumentRequest):
     vector_id = embed_document(request.text)
-    return {"vecotor_id": vector_id}
+    return {"vector_id": vector_id}
